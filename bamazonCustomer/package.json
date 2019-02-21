@@ -1,5 +1,5 @@
 {
-  "name": "bamazon",
+  "name": "bamazon_customer",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -14,7 +14,7 @@
     "bamazonCustomer": "./index.js"
   },
   "keywords": [],
-  "author": "",
+  "author": "Linu Ramachandran",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/lramac3/bamazon/issues"
