@@ -1,7 +1,15 @@
 const inquirer = require("inquirer");
 const mysql = require("mysql");
 const chalk = require("chalk");
-
+const Table = require('cli-table-redemption');
+let table = new Table({
+    chars: {
+        'top': '═', 'top-mid': '╤', 'top-left': '╔', 'top-right': '╗',
+        'bottom': '═', 'bottom-mid': '╧', 'bottom-left': '╚', 'bottom-right': '╝',
+        'left': '║', 'left-mid': '╟', 'mid': '─', 'mid-mid': '┼',
+        'right': '║', 'right-mid': '╢', 'middle': '│'
+    }
+});
 
 let connection = mysql.createConnection({
     host: "localhost",
@@ -24,8 +32,10 @@ function items4Sale() {
         console.log(chalk.green("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"));
         console.log(chalk.green("ITEMS FOR SALE:"))
         for (let i = 0; i < data.length; i++) {
-            console.log(chalk.green(`Item # ${data[i].item_id} ${data[i].product_name} $${data[i].price}`));
+            table.push([chalk.green(`Item # ${data[i].item_id} ${data[i].product_name} $${data[i].price}`)]);
+           
         }
+        console.log(table.toString())
         console.log(chalk.green("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"));
         shoppingUser(data);
     });
@@ -85,7 +95,7 @@ function shoppingUser(results) {
                 else {
                     let totalPrice = answers.quantity * itemPrice;
                     let newTotal = stock - answers.quantity;
-                    console.log(chalk.green(`You just bought ${answers.quantity} ${answers.action} for a total of $${totalPrice}.`));
+                    console.log(chalk.green(`Great! You just bought ${answers.quantity} ${answers.action} for a total of $${totalPrice}!`));
                     connection.query("UPDATE products SET stock_quantity = ? WHERE item_id = ?", [newTotal, itemId], function (error, data, fields) {
                         if (error) throw error;
                         items4Sale();
