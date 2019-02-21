@@ -1,5 +1,5 @@
 {
-  "name": "bamazonManager",
+  "name": "bamazon_manager",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -9,8 +9,15 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lramac3/bamazon.git"
+  },
+  "bin": {
+    "bamazonManager": "./index.js"
+  },
   "keywords": [],
-  "author": "",
+  "author": "Linu Ramachandran",
   "license": "ISC",
   "dependencies": {
     "chalk": "^2.4.2",

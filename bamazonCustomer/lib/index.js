@@ -53,13 +53,13 @@ function shoppingUser(results) {
                     "toothbrush",
                     "calculator",
                     "socks",
-                    "pen",
-                    "camcorder",
+                    "pencil",
+                    "camera",
                     "laptop",
                     "necklace",
                     "water bottle",
-                    "golf balls",
-                    "headphones"
+                    "tennis balls",
+                    "earpods"
                 ]
             },
             {
