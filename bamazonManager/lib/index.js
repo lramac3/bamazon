@@ -1,6 +1,16 @@
 const inquirer = require("inquirer");
 const mysql = require("mysql");
 const chalk = require("chalk");
+const Table = require('cli-table-redemption');
+let table = new Table({
+    chars: {
+        'top': '═', 'top-mid': '╤', 'top-left': '╔', 'top-right': '╗',
+        'bottom': '═', 'bottom-mid': '╧', 'bottom-left': '╚', 'bottom-right': '╝',
+        'left': '║', 'left-mid': '╟', 'mid': '─', 'mid-mid': '┼',
+        'right': '║', 'right-mid': '╢', 'middle': '│'
+    }
+});
+
 
 let connection = mysql.createConnection({
     host: "localhost",
@@ -60,8 +70,9 @@ function viewProducts() {
         console.log(chalk.green("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"));
         console.log(chalk.green("VIEW PRODUCTS"))
         for (let i = 0; i < data.length; i++) {
-            console.log(chalk.green(`Item # ${data[i].item_id} ${data[i].product_name} $${parseFloat(data[i].price).toFixed(2)} Quantity: ${data[i].stock_quantity}`));
+            table.push([chalk.green(`Item # ${data[i].item_id} ${data[i].product_name} $${parseFloat(data[i].price).toFixed(2)} Quantity: ${data[i].stock_quantity}`)]);
         }
+        console.log(table.toString())
         console.log(chalk.green("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"));
         userSelect();
     });
@@ -74,9 +85,13 @@ function viewLowInventory() {
         console.log(chalk.red("LOW INVENTORY"))
         for (let i = 0; i < data.length; i++) {
             if (data[i].stock_quantity < 5) {
-                console.log(chalk.red(`Item # ${data[i].item_id} ${data[i].product_name} $${data[i].price} Quantity: ${data[i].stock_quantity}`));
-            } else { console.log(chalk.cyan(`The inventory for ${data[i].product_name} looks good!`))}
+                
+                table.push([chalk.red(`Item # ${data[i].item_id} ${data[i].product_name} $${data[i].price} Quantity: ${data[i].stock_quantity}`)]);
+                
+            } 
+            else { table.push([chalk.cyan(`The inventory for ${data[i].product_name} is up-to-date!`)])}
         }
+        console.log(table.toString())
         console.log(chalk.red("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"));
         userSelect();
     });

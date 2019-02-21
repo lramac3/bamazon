@@ -32,7 +32,7 @@ function items4Sale() {
         console.log(chalk.green("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"));
         console.log(chalk.green("ITEMS FOR SALE:"))
         for (let i = 0; i < data.length; i++) {
-            table.push([chalk.green(`Item # ${data[i].item_id} ${data[i].product_name} $${data[i].price}`)]);
+            table.push([chalk.green(`Item # ${data[i].item_id} ${data[i].product_name} $${parseFloat(data[i].price).toFixed(2)}`)]);
            
         }
         console.log(table.toString())
