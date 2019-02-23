@@ -1,12 +1,4 @@
 USE bamazon; 
-
-CREATE TABLE departments (
-    department_id INTEGER(200) NOT NULL AUTO_INCREMENT,
-    department_name VARCHAR(200) NOT NULL,
-    overhead_cost DECIMAL(10,2) NOT NULL,
-    primary key (department_id)
-);
-USE bamazon; 
 INSERT INTO departments (department_name, overhead_cost) 
 VALUES ("Electronics", 20000.00),
 ("Hygiene", 12500.00),
@@ -27,6 +19,3 @@ VALUES
 ("Necklace", "Jewelry", 50.00, 40),
 ("Water Bottle", "Sporting Goods", 15.00, 30),
 ("Tennis Balls", "Sporting Goods", 20.00, 60);
-UPDATE products SET stock_quantity = 76 WHERE item_id = 10;
-
-SELECT * FROM products;

@@ -1,0 +1,33 @@
+{
+  "name": "bamazon",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "directories": {
+    "lib": "lib"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lramac3/bamazon.git"
+  },
+  "bin": {
+    "bamazon": "./index.js"
+  },
+  "keywords": [],
+  "author": "Linu Ramachandran",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/lramac3/bamazon/issues"
+  },
+  "homepage": "https://github.com/lramac3/bamazon#readme",
+  "dependencies": {
+    "chalk": "^2.4.2",
+    "cli-table-redemption": "^1.0.1",
+    "dotenv": "^6.2.0",
+    "inquirer": "^6.2.2",
+    "mysql": "^2.16.0"
+  }
+}
