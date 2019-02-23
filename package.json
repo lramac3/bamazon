@@ -1,5 +1,5 @@
 {
-  "name": "bamazon",
+  "name": "bamazon-cli",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -16,7 +16,7 @@
   "bin": {
     "bamazon": "./index.js"
   },
-  "keywords": [],
+  "keywords": ["bamazon","Customer","Manager","Supervisor"],
   "author": "Linu Ramachandran",
   "license": "ISC",
   "bugs": {
