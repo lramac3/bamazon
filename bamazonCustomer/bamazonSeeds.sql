@@ -4,12 +4,12 @@ INSERT INTO products
 (product_name, department_name, price, stock_quantity)
 VALUES 
 ("earpods", "electronics",10.00, 75), 
-("toothbrush", "hygiene", 3.50, 100),
+("toothbrush", "hygiene", 3.55, 100),
 ("calculator", "school supplies", 20.00, 30),
-("socks", "clothing", 3.00, 50),
+("socks", "clothing", 3.79, 4),
 ("pencil", "school supplies", 5.00, 200),
 ("camera", "electronics", 100.00, 25),
-("laptop", "electronics", 800.00, 15),
+("laptop", "electronics", 800.00, 3),
 ("necklace", "jewelry", 50.00, 40),
 ("water bottle", "sporting goods", 15.00, 30),
 ("tennis balls", "sporting goods", 20.00, 60);

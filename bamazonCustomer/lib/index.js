@@ -2,13 +2,13 @@ const inquirer = require("inquirer");
 const mysql = require("mysql");
 const chalk = require("chalk");
 const Table = require('cli-table-redemption');
+const bold = chalk.green.bold; // chalk npm for colors
+
 let table = new Table({
-    chars: {
-        'top': '═', 'top-mid': '╤', 'top-left': '╔', 'top-right': '╗',
-        'bottom': '═', 'bottom-mid': '╧', 'bottom-left': '╚', 'bottom-right': '╝',
-        'left': '║', 'left-mid': '╟', 'mid': '─', 'mid-mid': '┼',
-        'right': '║', 'right-mid': '╢', 'middle': '│'
-    }
+    // cli - table - redemption for a nice table building the header
+head: [bold('Id'), bold('Product Name'), bold('Item Price'), bold('Quantity')],
+    colWidths: [5, 40, 30, 20], // width of each column
+        colAligns: ['', '', '', 'right'] // right align price/quant
 });
 
 let connection = mysql.createConnection({
@@ -31,11 +31,34 @@ function items4Sale() {
         if (error) throw error;
         console.log(chalk.green("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"));
         console.log(chalk.green("ITEMS FOR SALE:"))
-        for (let i = 0; i < data.length; i++) {
-            table.push([chalk.green(`Item # ${data[i].item_id} ${data[i].product_name} $${parseFloat(data[i].price).toFixed(2)}`)]);
+        // arr = (typeof arr != 'undefined' && arr instanceof Array) ? arr.splice(0,15) : []
+        data.forEach(element => {
+            let id = element.item_id;
+            let name = element.product_name;
+            let itemPrice = parseInt(element.price).toFixed(2); // integers and making sure there is 2 decimal places
+            let quantity = parseInt(element.stock_quantity);// same here
+
+            itemPrice = '$' + itemPrice; // making sure these will all have $ in front in the table
+
+
+            table.push([id, name, itemPrice, quantity]);
+        })
+        console.log(chalk`{cyan ${table.toString()}}`)
+        // for (let i = 0; i < data.length; i++) {
+            
+        //     let arr=[]
            
-        }
-        console.log(table.toString())
+        //    arr[0] = chalk.green(`Item # ${data[i].item_id}`)
+        //    arr[1] = chalk.green(`${data[i].product_name}`)
+        //    arr[2] = chalk.green(`$${ parseFloat(data[i].price).toFixed(2) }`)
+        //     if (!table.includes(`${data[i].product_name}`)) {
+        //         table.push(arr)
+             
+               // console.table(arr)
+            //}
+        //}
+        //console.log(table)
+        //  console.log(table.toString())
         console.log(chalk.green("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"));
         shoppingUser(data);
     });
@@ -95,7 +118,7 @@ function shoppingUser(results) {
                 else {
                     let totalPrice = answers.quantity * itemPrice;
                     let newTotal = stock - answers.quantity;
-                    console.log(chalk.green(`Great! You just bought ${answers.quantity} ${answers.action} for a total of $${totalPrice}!`));
+                    console.log(chalk.green(`Great! You just bought ${answers.quantity} ${answers.action} for a total of $${parseFloat(totalPrice).toFixed(2)}!`));
                     connection.query("UPDATE products SET stock_quantity = ? WHERE item_id = ?", [newTotal, itemId], function (error, data, fields) {
                         if (error) throw error;
                         items4Sale();

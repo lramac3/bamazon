@@ -2,15 +2,19 @@ const inquirer = require("inquirer");
 const mysql = require("mysql");
 const chalk = require("chalk");
 const Table = require('cli-table-redemption');
-let table = new Table({
-    chars: {
-        'top': '═', 'top-mid': '╤', 'top-left': '╔', 'top-right': '╗',
-        'bottom': '═', 'bottom-mid': '╧', 'bottom-left': '╚', 'bottom-right': '╝',
-        'left': '║', 'left-mid': '╟', 'mid': '─', 'mid-mid': '┼',
-        'right': '║', 'right-mid': '╢', 'middle': '│'
-    }
+const bold = chalk.green.bold; // chalk npm for colors
+const bold1 = chalk.red.bold; // chalk npm for colors
+const table = new Table({ // cli-table-redemption for a nice table building the header
+    head: [bold('Id'), bold('Product Name'), bold('Item Price'), bold('Quantity')],
+    colWidths: [5, 40, 30, 20], // width of each column
+    colAligns: ['', '', '', 'right'] // right align price/quant
 });
-
+let table1 = new Table({
+     // cli-table-redemption for a nice table building the header
+        head: [bold1('Id'), bold1('Product Name'), bold1('Item Price'), bold1('Quantity')],
+        colWidths: [5, 40, 30, 20], // width of each column
+        colAligns: ['', '', '', 'right'] // right align price/quant
+});
 
 let connection = mysql.createConnection({
     host: "localhost",
@@ -69,10 +73,22 @@ function viewProducts() {
         if (error) throw error;
         console.log(chalk.green("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"));
         console.log(chalk.green("VIEW PRODUCTS"))
-        for (let i = 0; i < data.length; i++) {
-            table.push([chalk.green(`Item # ${data[i].item_id} ${data[i].product_name} $${parseFloat(data[i].price).toFixed(2)} Quantity: ${data[i].stock_quantity}`)]);
-        }
-        console.log(table.toString())
+        data.forEach(element => {
+            let id = element.item_id;
+            let name = element.product_name;
+            let itemPrice = parseInt(element.price).toFixed(2); // integers and making sure there is 2 decimal places
+            let quantity = parseInt(element.stock_quantity);// same here
+            
+            itemPrice = '$' + itemPrice; // making sure these will all have $ in front in the table
+            
+
+            table.push([id, name, itemPrice, quantity]);
+        })
+        console.log(chalk`{yellow ${table.toString()}}`)
+        // for (let i = 0; i < data.length; i++) {
+        //     table.push([chalk.green(`Item # ${data[i].item_id} ${data[i].product_name} $${parseFloat(data[i].price).toFixed(2)} Quantity: ${data[i].stock_quantity}`)]);
+        // }
+        // console.log(table.toString())
         console.log(chalk.green("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"));
         userSelect();
     });
@@ -83,15 +99,27 @@ function viewLowInventory() {
         if (error) throw error;
         console.log(chalk.red("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"));
         console.log(chalk.red("LOW INVENTORY"))
-        for (let i = 0; i < data.length; i++) {
-            if (data[i].stock_quantity < 5) {
+        data.forEach(element => {
+            let id = element.item_id;
+            let name = element.product_name;
+            let itemPrice = parseInt(element.price).toFixed(2); // integers and making sure there is 2 decimal places
+            let quantity = parseInt(element.stock_quantity);// same here
+
+            itemPrice = '$' + itemPrice; // making sure these will all have $ in front in the table
+              if (quantity<5){
+
+            table1.push([id, name, itemPrice, quantity]);}
+        })
+        console.log(chalk`{red ${table1.toString()}}`)
+        // for (let i = 0; i < data.length; i++) {
+        //     if (data[i].stock_quantity < 5) {
                 
-                table.push([chalk.red(`Item # ${data[i].item_id} ${data[i].product_name} $${data[i].price} Quantity: ${data[i].stock_quantity}`)]);
+        //         table1.push([chalk.red(`Item # ${data[i].item_id} ${data[i].product_name} $${data[i].price} Quantity: ${data[i].stock_quantity}`)]);
                 
-            } 
-            else { table.push([chalk.cyan(`The inventory for ${data[i].product_name} is up-to-date!`)])}
-        }
-        console.log(table.toString())
+        //     } 
+        //     else { table1.push([chalk.cyan(`The inventory for ${data[i].product_name} is up-to-date!`)])}
+        // }
+        // console.log(table1.toString())
         console.log(chalk.red("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"));
         userSelect();
     });

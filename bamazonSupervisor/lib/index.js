@@ -1,7 +1,15 @@
-const inquirer = require("inquirer");
+
 const mysql = require("mysql");
-const chalk = require("chalk");
+const inquirer = require('inquirer');
 const Table = require('cli-table-redemption');
+const chalk = require('chalk');
+
+const bold = chalk.green.bold; // chalk npm for colors
+const table = new Table({ // cli-table-redemption for a nice table building the header
+    head: [bold('Id'), bold('Department Name'), bold('Overhead Cost'), bold('Product Sales'), bold('Total Profits')],
+    colWidths: [5, 40, 30, 20, 20], // width of each column
+    colAligns: ['', '', '', 'right', 'right'], // right align price/quant
+});
 
 let connection = mysql.createConnection({
     host: "localhost",
@@ -10,84 +18,124 @@ let connection = mysql.createConnection({
     password: "Kiteguy25",
     database: "bamazon"
 });
-let hygiene = 0;
-let schoolSupplies = 0;
-let electronics = 0;
-let hygieneOverhead;
-let schoolOverhead;
-let electronicOverhead;
 
 function startConnection() {
     connection.connect(function (err) {
         if (err) throw err;
-        supervisor();
+        userSelect();
     });
 }
 
-function supervisor() {
-    inquirer
-        .prompt([
-            {
-                name: "action",
-                type: "list",
-                message: "What do you want to do?",
-                choices: [
-                    "View Product Sales by Department",
-                    "Create New Department"
-                ]
-            }
-        ])
-        .then(answers => {
-            switch (answers.action) {
-                case "View Product Sales by Department":
-                    userSelect();
-                    break;
-                case "Create New Department":
-                    connection.end();
-                    break;
-            }
-        });
-}
+const userSelect = () => {
+    inquirer.prompt([
+        {
+            name: 'super',
+            type: 'list',
+            message: '\r\n Hello Mr.Supervisor, Great to see you! \r\n What would you like to do?',
+            choices: ['View Product Sales By Department', 'Create New Department', 'Exit']
+        }
+    ]).then(answers => {
+        switch (answers.super) {
+            case 'View Product Sales By Department':
+                viewByDepartment();
+                break;
+            case 'Create New Department':
+                createNewDepartment();
+                break;
+            case 'Exit':
+                console.log(chalk`{bold.green Come back soon sir!}`);
+                connection.end();
+                break;
+            default:
+                console.log(chalk`{bold.green Come back soon sir!}`);
+                connection.end();
+                break;
+        };
+    }).catch(err => {
+        if (err) throw err;
+    });
+};
+// This took me the most time, I could not find a solid way to do this 
+// but after a long time of searching and throwing things together this is what we got, it works
+const viewByDepartment = () => {
+    // putting it into a query variable because of the length
+    let query = `SELECT departments.department_id, departments.department_name, departments.overhead_cost, CASE WHEN SUM(products.product_sales) IS NULL THEN 0 ELSE SUM(products.product_sales) END AS product_sales FROM departments LEFT JOIN products ON departments.department_name = products.department_name GROUP BY departments.department_id, departments.department_name;`;
+    connection.query(query,
+        (err, res) => {
+            if (err) throw err;
+            // loop the response and grab each column 
+            res.forEach(element => {
+                let id = element.department_id;
+                let name = element.department_name;
+                let overhead = parseInt(element.overhead_cost).toFixed(2); // integers and making sure there is 2 decimal places
+                let productSales = parseInt(element.product_sales).toFixed(2);// same here
+                let total = (productSales - overhead).toFixed(2);
+                overhead = '$' + overhead; // making sure these will all have $ in front in the table
+                productSales = '$' + productSales;
+                total = '$' + total;
 
-function userSelect() {
-    connection.query("SELECT departments.department_id, departments.department_name, departments.overHeadCosts, products.productSales, products.product_name FROM products INNER JOIN departments ON departments.department_name = products.department_name", function (error, data, fields) {
-        if (error) throw error;
-        for (let i = 0; i < data.length; i++) {
-            if (data[i].department_name === "hygiene") {
-                hygiene += data[i].productSales;
-                hygieneOverhead = data[i].overHeadCosts;
+                table.push([id, name, overhead, productSales, total]);
+            })
+            console.log(chalk`{yellow ${table.toString()}}`)
+            askAgain();
+        })
+};
 
-            }
-            else if (data[i].department_name === "school supplies") {
-                schoolSupplies += data[i].productSales;
-                schoolOverhead = data[i].overHeadCosts;
-            }
-            else {
-                electronics += data[i].productSales;
-                electronicOverhead = data[i].overHeadCosts;
+const createNewDepartment = () => {
+    inquirer.prompt([
+        {
+            name: 'department',
+            type: 'input',
+            message: 'What department would you like to add?'
+        },
+        {
+            name: 'overhead',
+            type: 'input',
+            message: 'What is the overhead cost?',
+            validate: (value) => {
+                return value.match(/^[1-9]\d*(((,\d{3}){1})?(\.\d{0,2})?)$/) ? true : console.log(chalk`{bold.green PLEASE ENTER A NUMBER WITH THE FORMAT OF 1111.00!}`);
+
             }
         }
-        makeTable();
+    ]).then(answers => {
+        connection.query(`INSERT INTO departments SET ?`, {
+            department_name: answers.department,
+            overhead_cost: answers.overhead
+        }, (err, res) => {
+            if (err) throw err;
+            console.log(chalk`{bold.green Department Added!}`);
+            askAgain();
+        })
+    }).catch(err => {
+        if (err) throw err;
     });
-}
+};
 
-function makeTable() {
-    let table = new Table({
-        chars: {
-            'top': '═', 'top-mid': '╤', 'top-left': '╔', 'top-right': '╗'
-            , 'bottom': '═', 'bottom-mid': '╧', 'bottom-left': '╚', 'bottom-right': '╝'
-            , 'left': '║', 'left-mid': '╟', 'mid': '─', 'mid-mid': '┼'
-            , 'right': '║', 'right-mid': '╢', 'middle': '│'
+const askAgain = () => {
+    inquirer.prompt([
+        {
+            name: 'again',
+            type: 'list',
+            message: 'Would you like to do something else?',
+            choices: ['Yes', 'No', 'Change to Customer/Manager']
         }
-    });
-    table.push(
-        ['department_id', 'department_name', 'overhead_cost', 'product_sales', 'total_profit'],
-        ["1", "hygiene", hygieneOverhead, hygiene, hygiene - hygieneOverhead],
-        ["2", "schoolSupples", schoolOverhead, schoolSupplies, schoolSupplies - schoolOverhead],
-        ["3", "electronics", electronicOverhead, electronics, electronics - electronicOverhead]
-    );
-    console.log(chalk.green(table.toString()));
-    connection.end();
-}
+    ]).then(answers => {
+        switch (answers.again) {
+            case 'Yes':
+                userSelect();
+                break;
+            case 'No':
+                console.log(chalk`{bold.green Have a great day!}`);
+                connection.end();
+                break;
 
+            default:
+                console.log(chalk`{bold.green Have a great day!}`);
+                connection.end();
+                break;
+        }
+    }).catch(err => {
+        if (err) throw err;
+    });
+}
 startConnection();
