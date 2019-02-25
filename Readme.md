@@ -36,11 +36,11 @@ The customer interface allows the user to view the current inventory of store it
 
 The manager interface presents a list of five options:
 
-  *  View Products for Sale: If the manager selects View Products for Sale, it lists all of the products in the    store including all of their details.
-  * View Low Inventory: If the manager selects View Low Inventory, it lists all the products with less than five items in its stock quantity column.
-  *  Add to Inventory: If the manager selects Add to Inventory, it allows the manager to select a product and add inventory.
-  *  Add New Product: If the manager selects Add New Product, it allows the manager to add a new product to the store.
-  *  Exit: If the manager selects Exit, it ends the session and doesn't go back to the menu.
+*  View Products for Sale: If the manager selects View Products for Sale, it lists all of the products in the    store including all of their details.
+* View Low Inventory: If the manager selects View Low Inventory, it lists all the products with less than five items in its stock quantity column.
+*  Add to Inventory: If the manager selects Add to Inventory, it allows the manager to select a product and add inventory.
+*  Add New Product: If the manager selects Add New Product, it allows the manager to add a new product to the store.
+*  Exit: If the manager selects Exit, it ends the session and doesn't go back to the menu.
 
 ![man-ai](https://user-images.githubusercontent.com/28829258/53323376-fe636280-38ab-11e9-8adf-f6e2fe6b31ed.png)
 
@@ -57,8 +57,8 @@ The manager interface presents a list of five options:
 The supervisor interface presents a list of three options:
 
 *    View Product Sales by Department: If the supervisor selects View Product Sales by Department, it lists the Department Sales and calculates the total sales from the overhead cost and product sales. User is also given 3 options, Yes, No and Change to Customer/Manager. If the user wants to exit, user can click No. If the user clicks yes, user can create new department. If user clicks on Change to Customer/Manager, the user can choose to use the customer or manager interface.
- *   Create New Department: If the supervisor selects Create New Department, it allows the manager to create a new department and input current overhead costs and product sales. User is also given 3 options, Yes, No and Change to Customer/Manager. If the user wants to exit, user can click No. If the user clicks yes, user can view product sales by department. If user clicks on Change to Customer/Manager, the user can choose to use the customer or manager interface.
- *   Exit: If the supervisor selects Exit, it ends the session and doesn't go back to the menu.
+*   Create New Department: If the supervisor selects Create New Department, it allows the manager to create a new department and input current overhead costs and product sales. User is also given 3 options, Yes, No and Change to Customer/Manager. If the user wants to exit, user can click No. If the user clicks yes, user can view product sales by department. If user clicks on Change to Customer/Manager, the user can choose to use the customer or manager interface.
+*   Exit: If the supervisor selects Exit, it ends the session and doesn't go back to the menu.
 
 ![sup-welcome](https://user-images.githubusercontent.com/28829258/53324875-e988ce00-38af-11e9-85a4-1557076e8959.png)
 
