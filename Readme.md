@@ -56,9 +56,11 @@ The manager interface presents a list of five options:
 
 The supervisor interface presents a list of three options:
 
-*    View Product Sales by Department: If the supervisor selects View Product Sales by Department, it lists the Department Sales and calculates the total sales from the overhead cost and product sales. User is also given 3 options, Yes, No and Change to Customer/Manager. If the user wants to exit, user can click No. If the user clicks yes, user can create new department. If user clicks on Change to Customer/Manager, the user can choose to use the customer or manager interface.
-*   Create New Department: If the supervisor selects Create New Department, it allows the manager to create a new department and input current overhead costs and product sales. User is also given 3 options, Yes, No and Change to Customer/Manager. If the user wants to exit, user can click No. If the user clicks yes, user can view product sales by department. If user clicks on Change to Customer/Manager, the user can choose to use the customer or manager interface.
-*   Exit: If the supervisor selects Exit, it ends the session and doesn't go back to the menu.
+1. View Product Sales by Department: If the supervisor selects View Product Sales by Department, it lists the Department Sales and calculates the total sales from the overhead cost and product sales. User is also given 3 options, Yes, No and Change to Customer/Manager. If the user wants to exit, user can click No. If the user clicks yes, user can create new department. If user clicks on Change to Customer/Manager, the user can choose to use the customer or manager interface.
+
+2. Create New Department: If the supervisor selects Create New Department, it allows the manager to create a new department and input current overhead costs and product sales. User is also given 3 options, Yes, No and Change to Customer/Manager. If the user wants to exit, user can click No. If the user clicks yes, user can view product sales by department. If user clicks on Change to Customer/Manager, the user can choose to use the customer or manager interface.
+
+3.  Exit: If the supervisor selects Exit, it ends the session and doesn't go back to the menu.
 
 ![sup-welcome](https://user-images.githubusercontent.com/28829258/53324875-e988ce00-38af-11e9-85a4-1557076e8959.png)
 
