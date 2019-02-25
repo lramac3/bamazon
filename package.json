@@ -1,6 +1,6 @@
 {
   "name": "bamazon-cli",
-  "version": "1.0.2",
+  "version": "1.0.4",
   "description": "",
   "main": "index.js",
   "directories": {
@@ -29,5 +29,11 @@
     "dotenv": "^6.2.0",
     "inquirer": "^6.2.2",
     "mysql": "^2.16.0"
+  },
+  "devDependencies": {
+    "inspect": "0.0.2"
+  },
+  "engines": {
+    "node": "10.15.0"
   }
 }
