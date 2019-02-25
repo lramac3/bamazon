@@ -1,8 +1,8 @@
 # Welcome to BAMAZON
 
- Find everything you need at Bamazon! Bamazon, the node cli shopping app is an interactive app which allows the users to purchase items as a customer, view, track and update the product inventory as a manager, and track the total sales by department as a supervisor.
+Find everything you need at Bamazon! Bamazon, the node cli shopping app is an interactive app which allows the users to purchase items as a customer, view, track and update the product inventory as a manager, and track the total sales by department as a supervisor.
 
- ### Getting Started
+### Getting Started
 
 If you are downloading the npm package, run the following command in your terminal
 
