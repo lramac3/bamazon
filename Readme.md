@@ -36,11 +36,15 @@ The customer interface allows the user to view the current inventory of store it
 
 The manager interface presents a list of five options:
 
-*  View Products for Sale: If the manager selects View Products for Sale, it lists all of the products in the    store including all of their details.
-* View Low Inventory: If the manager selects View Low Inventory, it lists all the products with less than five items in its stock quantity column.
-*  Add to Inventory: If the manager selects Add to Inventory, it allows the manager to select a product and add inventory.
-*  Add New Product: If the manager selects Add New Product, it allows the manager to add a new product to the store.
-*  Exit: If the manager selects Exit, it ends the session and doesn't go back to the menu.
+1. View Products for Sale: If the manager selects View Products for Sale, it lists all of the products in the    store including all of their details.
+
+2. View Low Inventory: If the manager selects View Low Inventory, it lists all the products with less than five items in its stock quantity column.
+
+3. Add to Inventory: If the manager selects Add to Inventory, it allows the manager to select a product and add inventory.
+
+4. Add New Product: If the manager selects Add New Product, it allows the manager to add a new product to the store.
+
+5. Exit: If the manager selects Exit, it ends the session and doesn't go back to the menu.
 
 ![man-ai](https://user-images.githubusercontent.com/28829258/53323376-fe636280-38ab-11e9-8adf-f6e2fe6b31ed.png)
 
