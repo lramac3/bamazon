@@ -7,7 +7,9 @@
     "lib": "lib"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "snyk-protect": "snyk protect",
+    "prepare": "npm run snyk-protect"
   },
   "repository": {
     "type": "git",
@@ -16,7 +18,12 @@
   "bin": {
     "bamazon": "./index.js"
   },
-  "keywords": ["bamazon","Customer","Manager","Supervisor"],
+  "keywords": [
+    "bamazon",
+    "Customer",
+    "Manager",
+    "Supervisor"
+  ],
   "author": "Linu Ramachandran",
   "license": "ISC",
   "bugs": {
@@ -28,12 +35,14 @@
     "cli-table-redemption": "^1.0.1",
     "dotenv": "^6.2.0",
     "inquirer": "^6.2.2",
-    "mysql": "^2.16.0"
+    "mysql": "^2.16.0",
+    "snyk": "^1.189.0"
   },
   "devDependencies": {
     "inspect": "0.0.2"
   },
   "engines": {
     "node": "10.15.0"
-  }
+  },
+  "snyk": true
 }
